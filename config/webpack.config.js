@@ -1,7 +1,7 @@
 const fs        = require('fs');
 const path = require('path');
 const webpack = require('webpack');
-let _indexFile   = path.join(__dirname, '..','src', 'NodeSelector.js' ); 
+let _indexFile   = path.join(__dirname, '..','build', 'ai_node_selector.js' ); 
 
 
 
