@@ -4,7 +4,6 @@ const webpack = require('webpack');
 let _indexFile   = path.join(__dirname, '..','build', 'ai_node_selector.js' ); 
 
 
-
 var initializeTmpDir = ( dir )=>{
   if (!fs.existsSync(dir)){
       fs.mkdirSync(dir);

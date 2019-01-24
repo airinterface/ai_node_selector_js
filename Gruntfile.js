@@ -3,7 +3,7 @@ const path      = require('path');
 let _path       = path.resolve(__dirname, 'require.json')
 let _required   = require(_path);
 let _requiredjs = _required.map( (f) => { return path.join(__dirname, 'src', f); });
-const webpackConfig = require('./config/webpack.config.js');
+const webpackConfig = require('./config/webpack.config.js')( '--config', './config/webpack.config.js' );
 
 
 var initializeTmpDir = ( dir )=>{
@@ -16,6 +16,7 @@ initializeTmpDir( 'build' );
 
 
 module.exports = function( grunt ) {
+
   const package = grunt.file.readJSON('package.json');
   console.log( "package name ===== " + package.name );
 
@@ -41,7 +42,7 @@ module.exports = function( grunt ) {
         stats: !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
       },
       prod: webpackConfig,
-      dev: Object.assign({ watch: true }, webpackConfig)
+      dev: webpackConfig //Object.assign({ watch: true }, webpackConfig)
     }
   });
   

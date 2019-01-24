@@ -38,7 +38,7 @@
             }
           }
           return res;
-        }
+        },
 
         /**
          * ths method will return the object representing the first element in
@@ -86,12 +86,12 @@
           return res;
         },
 
-        fundAll: function( selector ){
+        findAll: function( selector ){
           var res = [];
           let list = this.findNodes(selectors);
           if( list.length > 0  ){
             if( lisforEacht.length > 0 ){
-              list.( function(_node){
+              list.forEach( function(_node){
                 res.push[ new NodeSelector( _node ) ];
               });
             }
@@ -99,8 +99,6 @@
           return res;
         },
 
-        get: function(){
-        }
       },
       {
         $ai: function( selector_or_node  ) {
