@@ -28,7 +28,7 @@ module.exports = () => {
         optimization: {
           // We no not want to minimize our code.
           minimize: false,
-        //  runtimeChunk: true
+          runtimeChunk: false
         //   runtimeChunk: "single", // enable "runtime" chunk
         //   splitChunks: {
         //     minChunks: Infinity,
