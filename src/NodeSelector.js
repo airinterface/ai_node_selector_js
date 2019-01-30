@@ -85,30 +85,43 @@
           }
           return res;
         },
-
+        /**
+         * returns the node that matches selector. 
+         * 
+         * @param      {String}   selector  The selector
+         * @param      {boolean}  selfOnly  check against current node or false for 
+         *                        when you want to include descendant. 
+         * @return     {Array}    array of matched node.
+         */
+        containsOrSelfMatches: function( selector, selfOnly=false ){
+          var res = [];
+          let _nodeList = this.nodeList;
+          if( _nodeList.length > 0 ){
+            var f   = document.createDocumentFragment();
+            for( var _i = 0; _i < _nodeList.length; _i++ ){
+              let _node    = _nodeList[ _i ];
+              let _nodeTmp = _node.cloneNode( !selfOnly );
+              f.appendChild( _nodeTmp );
+              let _tmpElList  = f.querySelectorAll( selector );
+              if( _tmpElList.length > 0 ){
+                _tmpElList.forEach( function( node ){
+                  res.push(node);
+                }.bind(this));
+              }
+              f.removeChild( _nodeTmp );
+            }
+            f = null;
+          }
+          return res;
+        },
 
         /* if nodeList length is more than 1 
         */
         is: function( selector ){
-          var res = false;
-          let _nodeList = this.nodeList;
-          if( _nodeList.length > 0 ){
-            var f   = document.createDocumentFragment();
-            res     = true;
-            for( var _i = 0; _i < _nodeList.length; _i++ ){
-              let _node    = _nodeList[ _i ];
-              let _nodeTmp = _node.cloneNode();
-              f.appendChild( _nodeTmp );
-              let _tmpEl   = f.querySelector( selector );
-              if( _tmpEl == null ){
-                res = false;
-              }
-              f.removeChild( _nodeTmp );
-              if( res == false ) {
-                break;
-              }
-            }
-            f = null;
+          var res       = false;
+          if( this.nodeList.length > 0 ){
+            let matchList = this.containsOrSelfMatches( selector, true );
+            res = ( matchList.length == this.nodeList.length );
           }
           return res;
         },
