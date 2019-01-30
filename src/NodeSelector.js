@@ -86,11 +86,38 @@
           return res;
         },
 
+
+        /* if nodeList length is more than 1 
+        */
+        is: function( selector ){
+          var res = false;
+          let _nodeList = this.nodeList;
+          if( _nodeList.length > 0 ){
+            var f   = document.createDocumentFragment();
+            res     = true;
+            for( var _i = 0; _i < _nodeList.length; _i++ ){
+              let _node    = _nodeList[ _i ];
+              let _nodeTmp = _node.cloneNode();
+              f.appendChild( _nodeTmp );
+              let _tmpEl   = f.querySelector( selector );
+              if( _tmpEl == null ){
+                res = false;
+              }
+              f.removeChild( _nodeTmp );
+              if( res == false ) {
+                break;
+              }
+            }
+            f = null;
+          }
+          return res;
+        },
+
         findAll: function( selector ){
           var res = [];
           let list = this.findNodes(selectors);
           if( list.length > 0  ){
-            if( lisforEacht.length > 0 ){
+            if( list.length > 0 ){
               list.forEach( function(_node){
                 res.push[ new NodeSelector( _node ) ];
               });
@@ -109,6 +136,6 @@
           return ainode;
         }
       });
-  com.ai.NodeSelector = NodeSelector;
-}).call( this );
+  this.NodeSelector = NodeSelector;
+}).call( com.ai );
   
