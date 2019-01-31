@@ -250,9 +250,9 @@
         parseSelector: function( string ){
           var match;
           var tmpStr = string;
-          let re = /([^\[]*\[\s*[^=]+\s*=\s*)([^'^"^\]^\s]+\s?[^'^"^\]^\s]+)(\s*\])/;
+          let re = /([^\[]*\[\s*[^=]+\s*=\s*)([^'^"^\]^\s]+(\s+[^'^"^\]^\s]+)*)(\s*\])/;
           while( match = tmpStr.match(re) ){
-            let replacingString = match[1] + "'" + match[2] + "'" + match[3];
+            let replacingString = match[1] + "'" + match[2] + "'" + match[4];
             tmpStr = tmpStr.replace( match[0], replacingString );
           }
           return tmpStr;
