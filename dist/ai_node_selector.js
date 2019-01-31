@@ -92,7 +92,7 @@
 (function() {
 
 /*! ai_node_selector - v1.0.0 - 
-2019-01-30 
+2019-01-31 
 
 */'use strict';
 ( function(){
@@ -105,7 +105,7 @@
           if( selector instanceof Node  ){
             this.nodeList.push( selector );
           } else {
-            this.nodeList = Array.from(document.querySelectorAll( selector ));
+            this.nodeList = Array.from(document.querySelectorAll( $parseSelector( selector ) ));
           }
           this.length = this.nodeList.length;
         },
@@ -135,7 +135,8 @@
           }
           return res;
         },
-
+        
+        
         /**
          * ths method will return the object representing the first element in
          *  the document that matches the specified set of CSS selectors, 
@@ -148,7 +149,7 @@
           var res = null;
           if( !this.isEmpty() ) {
             this.nodeList.forEach( function( node ){
-              let _node = node.querySelector( selector );
+              let _node = node.querySelector( $parseSelector( selector ) );
               if( _node != null ) {
                 res = _node; 
                 break;
@@ -162,7 +163,7 @@
           var res = [];
           if( !this.isEmpty() ) {
             this.nodeList.forEach( function( node ) {
-              let _nodeList = node.querySelectorAll( selector );
+              let _nodeList = node.querySelectorAll( $parseSelector( selector ) );
               if( _nodeList.length > 0 ){
                 _nodeList.forEach( function(_node ){
                   res.push(_node);
@@ -198,7 +199,7 @@
               let _node    = _nodeList[ _i ];
               let _nodeTmp = _node.cloneNode( !selfOnly );
               f.appendChild( _nodeTmp );
-              let _tmpElList  = f.querySelectorAll( selector );
+              let _tmpElList  = f.querySelectorAll( $parseSelector( selector ) );
               if( _tmpElList.length > 0 ){
                 _tmpElList.forEach( function( node ){
                   res.push(node);
@@ -222,6 +223,7 @@
           return res;
         },
 
+
         findAll: function( selector ){
           var res = [];
           let list = this.findNodes(selectors);
@@ -243,9 +245,22 @@
             ainode = new NodeSelector( selector_or_node );
           }
           return ainode;
+        },
+
+        parseSelector: function( string ){
+          var match;
+          var tmpStr = string;
+          let re = /([^\[]*\[\s*[^=]+\s*=\s*)([^'^"^\]^\s]+\s?[^'^"^\]^\s]+)(\s*\])/;
+          while( match = tmpStr.match(re) ){
+            let replacingString = match[1] + "'" + match[2] + "'" + match[3];
+            tmpStr = tmpStr.replace( match[0], replacingString );
+          }
+          return tmpStr;
         }
+
       });
-  this.NodeSelector = NodeSelector;
+  var $parseSelector = NodeSelector.parseSelector;
+  this.NodeSelector     = NodeSelector;
 }).call( com.ai );
   
 

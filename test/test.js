@@ -16,6 +16,15 @@
       assert.ok( ( res2.length == 1 ), 'matches self only');
       
     });
+
+    QUnit.test("Node Selector parsing", function(assert){
+      var str = "#a[b=234]";
+      assert.ok( com.ai.NodeSelector.parseSelector( str ) == "#a[b='234']", "returns valid selector");
+
+      var str2   = "#a[b=\"234\"] .test [c = 234 ] [d]";
+      var result = "#a[b=\"234\"] .test [c = '234' ] [d]";
+      assert.ok( com.ai.NodeSelector.parseSelector(  str2  ) == result, "returns valid selector");
+    });
   };
   testAll();
 }).call(this);
