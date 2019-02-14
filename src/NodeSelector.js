@@ -52,13 +52,14 @@
         findNode: function( selector ){
           var res = null;
           if( !this.isEmpty() ) {
-            this.nodeList.forEach( function( node ){
-              let _node = node.querySelector( $parseSelector( selector ) );
+            var _nodeList = this.nodeList;
+            for( var _i = 0; _i < _nodeList.length; _i++ ){
+              let _node = _nodeList[i].querySelector( $parseSelector( selector ) );
               if( _node != null ) {
                 res = _node; 
                 break;
               }
-            });
+            }
           }
           return res;
         },
